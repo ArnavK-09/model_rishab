@@ -6,7 +6,7 @@ import pickle
 from pytz import timezone
 import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.pipeline import Pipeline
 
@@ -43,7 +43,7 @@ log("Started Model Processing....")
 MODEL = Pipeline([
     ('bow', CountVectorizer()),
     ('tfidf', TfidfTransformer()),
-    ('classifier', DecisionTreeClassifier())
+    ('classifier', RandomForestClassifier())
 ])
 
 # data fit
