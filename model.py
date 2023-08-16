@@ -1,52 +1,57 @@
-# imports
-import time
+# standard imports
 import math
+import pickle
+import time
 from datetime import datetime
-# import pickle
-from pytz import timezone
+
+# module imports
 import pandas as pd
-from sklearn.feature_extraction.text import CountVectorizer
+from pytz import timezone
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.feature_extraction.text import TfidfTransformer
+from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 from sklearn.pipeline import Pipeline
 
-# logging 
+# logging
 last_time = time.time()
+
+
 def log(*args):
-    """
-        Function to log model processing
-    """
+    """Do logs for model processing."""
 
-    # elapsed time 
-    global last_time 
-
-    # log 
-    print("\x1b[2m", datetime.now(timezone("Asia/Kolkata")).strftime('%Y-%m-%d %H:%M:%S'),
-          "\x1b[1m\x1b[97m", "[MODEL] ", "\x1b[0m", ''.join(args), "\x1b[1m\x1b[97m | \x1b[91m", math.floor(time.time() - last_time),end="s\x1b[0m\n")
+    global last_time
+    # log
+    print(
+        "\x1b[2m",
+        datetime.now(timezone("Asia/Kolkata")).strftime("%Y-%m-%d %H:%M:%S"),
+        "\x1b[1m\x1b[97m",
+        "[MODEL] ",
+        "\x1b[0m",
+        "".join(args),
+        "\x1b[1m\x1b[97m | \x1b[91m",
+        math.floor(time.time() - last_time),
+        end="s\x1b[0m\n",
+    )
     last_time = time.time()
-
 
 
 # reading data
 log("Processing Data....")
-DF = pd.read_csv('./data/dialogs.txt', sep='|')
+DF = pd.read_csv("./data/dialogs.txt", sep="|")
 log("Data Processed....")
 
 # model classifiers
 log("Started Model Processing....")
-MODEL = Pipeline([
-    ('bow', CountVectorizer(max_df=0.6, min_df=5)),
-    ('tfidf', TfidfTransformer()),
-    ('classifier', RandomForestClassifier(n_estimators=100, random_state=0))
-])
+MODEL = Pipeline(
+    [
+        ("bow", CountVectorizer()),
+        ("tfidf", TfidfTransformer(sublinear_tf=True)),
+        ("classifier", RandomForestClassifier(n_estimators=100)),
+    ]
+)
 
 # data fit
-MODEL.fit(DF['question'], DF['answer'])
+MODEL.fit(DF["question"], DF["answer"])
 log("Model Processing Done...")
 
-
-# demo output
-while True:
-    user = input("Chat > ")
-    output = MODEL.predict([user])[0]
-    print(output)
+# dump
+pickle.dump(MODEL, open("model.pkl", "wb"))

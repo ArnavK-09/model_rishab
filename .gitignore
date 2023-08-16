@@ -1,0 +1,4 @@
+__pycache__
+.chainlit
+.trunk
+model.pkl
