@@ -1,13 +1,13 @@
 # imports
-from pytz import timezone
 import time
 import math
 from datetime import datetime
 import pickle
+from pytz import timezone
 import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.feature_extraction.text import TfidfTransformer, TfidfVectorizer
+from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.pipeline import Pipeline
 
 
@@ -31,11 +31,11 @@ def log(*args):
 # reading data
 log("Processing Data....")
 df1 = pd.read_csv('./data/dialogs1.csv', sep='\t')
-df2 = pd.read_csv('./data/dialogs2.csv', sep=',')
+# df2 = pd.read_csv('./data/dialogs2.csv', sep=',')
 
 # merge
-DF = pd.merge(df1, df2)
-DF = DF[['question', 'answer']]
+# DF = pd.merge(df1, df2)
+DF = df1[['question', 'answer']]
 log("Data Processed....")
 
 # model classifiers
