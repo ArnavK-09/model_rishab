@@ -1,6 +1,5 @@
 # imports
 import pickle
-
 import streamlit as st
 
 # set config
