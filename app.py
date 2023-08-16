@@ -1,10 +1,6 @@
 # imports
 import pickle
-import streamlit as st
-import pandas as pd
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
-from sklearn.pipeline import Pipeline
+import streamlit as st 
 
 # set config
 st.set_page_config(
@@ -23,17 +19,7 @@ st.caption(
 st.divider()
 
 # model
-DF = pd.read_csv("./data/dialogs.txt", sep="|")
-MODEL = Pipeline( 
-     [ 
-         ("bow", CountVectorizer()), 
-         ("tfidf", TfidfTransformer(sublinear_tf=True)), 
-         ("classifier", RandomForestClassifier(n_estimators=100)), 
-     ] 
- ) 
-  
-# data fit 
-MODEL.fit(DF["question"], DF["answer"])
+MODEL = pickle.load(open("model.pkl", "rb"))
 # get prompt
 prompt = st.chat_input("Say something")
 
