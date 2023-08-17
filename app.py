@@ -40,7 +40,7 @@ prompt = st.chat_input("Say something")
 # Initialize chat history
 if "messages" not in st.session_state:
     st.session_state.messages = []
-    st.snow()
+    st.balloons()
 
 # Display chat messages from history on app rerun
 for message in st.session_state.messages:
