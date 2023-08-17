@@ -1,6 +1,6 @@
 # Talk To Rishab! 🐵
 
-Welcome to the "Talk To Rishab!" project repository! 🎉
+Welcome to the "Talk To Rishab!" project repository! 🎉 [Deployable]
 
 <p align="center"> 
   <a href="https://github.com/ArnavK-09/model_rishab">
